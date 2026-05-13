@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Logs
+*.log
+
+# Coverage
+coverage/
+
+# Temporary files
+*.tmp
+
+# TypeScript
+*.tsbuildinfo
+
+# Generated config files
+vite.config.d.ts
+vite.config.js
