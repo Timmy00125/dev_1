@@ -57,7 +57,10 @@ export function UploadModal({ itemId, onClose, onComplete }: Props) {
   useEffect(() => {
     if (!jobId) return;
 
-    const socket = io("/jobs", {
+    const socketBase = import.meta.env.VITE_API_URL
+      ? import.meta.env.VITE_API_URL.replace(/\/?api$/, "")
+      : "";
+    const socket = io(`${socketBase}/jobs`, {
       query: { jobId },
       transports: ["websocket"],
     });
