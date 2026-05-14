@@ -15,9 +15,9 @@ const SAMPLE_GLB = 'https://modelviewer.dev/shared-assets/models/Astronaut.glb';
 const SAMPLE_USDZ = 'https://modelviewer.dev/shared-assets/models/Astronaut.usdz';
 
 async function main() {
-  await prisma.restaurant.deleteMany().catch(() => {});
-  await prisma.menuItem.deleteMany().catch(() => {});
   await prisma.processingJob.deleteMany().catch(() => {});
+  await prisma.menuItem.deleteMany().catch(() => {});
+  await prisma.restaurant.deleteMany().catch(() => {});
 
   const restaurant = await prisma.restaurant.create({
     data: {
@@ -37,7 +37,7 @@ async function main() {
       imageUrl: 'https://images.unsplash.com/photo-1572441713132-c542fc4fe282?w=900&auto=format&fit=crop&q=80',
       modelUrl: SAMPLE_GLB,
       usdzUrl: SAMPLE_USDZ,
-      ingredients: JSON.stringify(['Burrata', 'Prosciutto', 'Tomato', 'Basil']),
+      ingredients: ['Burrata', 'Prosciutto', 'Tomato', 'Basil'],
       isRecommended: true,
       heat: 0,
       status: 'COMPLETED' as const,
@@ -52,7 +52,7 @@ async function main() {
       imageUrl: 'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=900&auto=format&fit=crop&q=80',
       modelUrl: SAMPLE_GLB,
       usdzUrl: SAMPLE_USDZ,
-      ingredients: JSON.stringify(['Truffle', 'Ricotta', 'Chive', 'Brown Butter']),
+      ingredients: ['Truffle', 'Ricotta', 'Chive', 'Brown Butter'],
       isRecommended: false,
       heat: 1,
       status: 'COMPLETED' as const,
@@ -67,7 +67,7 @@ async function main() {
       imageUrl: 'https://images.unsplash.com/photo-1558030006-450675393462?w=900&auto=format&fit=crop&q=80',
       modelUrl: null,
       usdzUrl: null,
-      ingredients: JSON.stringify(['Ribeye', 'Peppercorn', 'Cognac', 'Frites']),
+      ingredients: ['Ribeye', 'Peppercorn', 'Cognac', 'Frites'],
       isRecommended: true,
       heat: 2,
       status: 'COMPLETED' as const,
@@ -82,7 +82,7 @@ async function main() {
       imageUrl: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=900&auto=format&fit=crop&q=80',
       modelUrl: null,
       usdzUrl: null,
-      ingredients: JSON.stringify(['Wagyu', 'Truffle Aioli', 'Comté', 'Brioche']),
+      ingredients: ['Wagyu', 'Truffle Aioli', 'Comté', 'Brioche'],
       isRecommended: false,
       heat: 1,
       status: 'COMPLETED' as const,

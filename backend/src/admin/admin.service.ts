@@ -12,7 +12,7 @@ export class AdminService {
     });
     return items.map((item) => ({
       ...item,
-      ingredients: JSON.parse(item.ingredients),
+      ingredients: item.ingredients as string[],
     }));
   }
 
@@ -26,7 +26,7 @@ export class AdminService {
         calories: dto.calories,
         categoryId: dto.categoryId,
         imageUrl: dto.imageUrl,
-        ingredients: JSON.stringify(dto.ingredients || []),
+        ingredients: dto.ingredients || [],
         isRecommended: dto.isRecommended || false,
         heat: dto.heat || 0,
         status: 'PENDING',
@@ -42,7 +42,7 @@ export class AdminService {
     if (dto.calories !== undefined) data.calories = dto.calories;
     if (dto.categoryId !== undefined) data.categoryId = dto.categoryId;
     if (dto.imageUrl !== undefined) data.imageUrl = dto.imageUrl;
-    if (dto.ingredients !== undefined) data.ingredients = JSON.stringify(dto.ingredients);
+    if (dto.ingredients !== undefined) data.ingredients = dto.ingredients;
     if (dto.isRecommended !== undefined) data.isRecommended = dto.isRecommended;
     if (dto.heat !== undefined) data.heat = dto.heat;
 

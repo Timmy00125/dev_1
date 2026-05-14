@@ -35,7 +35,7 @@ export class MenuService {
       categories,
       items: items.map((item) => ({
         ...item,
-        ingredients: JSON.parse(item.ingredients),
+        ingredients: item.ingredients as string[],
       })),
     };
   }

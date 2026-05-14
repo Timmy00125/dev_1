@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -27,7 +27,7 @@ model MenuItem {
   imageUrl     String
   modelUrl     String?
   usdzUrl      String?
-  ingredients  String // JSON array stored as string for SQLite
+  ingredients  Json
   isRecommended Boolean      @default(false)
   heat         Int            @default(0)
   status       String         @default("PENDING")
