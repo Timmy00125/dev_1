@@ -3,8 +3,32 @@ import { PrismaService } from '../prisma/prisma.service';
 import { JobsGateway } from './jobs.gateway';
 import { v4 as uuidv4 } from 'uuid';
 
-const SAMPLE_GLB = 'https://modelviewer.dev/shared-assets/models/Astronaut.glb';
-const SAMPLE_USDZ = 'https://modelviewer.dev/shared-assets/models/Astronaut.usdz';
+const DEFAULT_GLB = 'https://modelviewer.dev/shared-assets/models/Astronaut.glb';
+const DEFAULT_USDZ = 'https://modelviewer.dev/shared-assets/models/Astronaut.usdz';
+
+// Map item names (case-insensitive) to real food models
+const FOOD_MODEL_MAP: Record<string, { glb: string; usdz?: string }> = {
+  'zinger burger': {
+    glb: '/models/zinger-burger.glb',
+  },
+  't-bone steak': {
+    glb: '/models/t-bone-steak.glb',
+  },
+  'sourdough bread': {
+    glb: '/models/sourdough-bread.glb',
+  },
+  'spicy ramen': {
+    glb: '/models/spicy-ramen.glb',
+  },
+};
+
+function resolveModel(itemName: string): { glb: string; usdz?: string } {
+  const key = Object.keys(FOOD_MODEL_MAP).find((k) =>
+    itemName.toLowerCase().includes(k),
+  );
+  if (key) return FOOD_MODEL_MAP[key];
+  return { glb: DEFAULT_GLB, usdz: DEFAULT_USDZ };
+}
 
 @Injectable()
 export class JobsService {
@@ -87,13 +111,21 @@ export class JobsService {
       });
     }
 
+    // Look up the item name so we can assign the correct real-food model
+    const item = await this.prisma.menuItem.findUnique({
+      where: { id: itemId },
+      select: { name: true },
+    });
+
+    const model = resolveModel(item?.name || '');
+
     // Update menu item with model URL
     await this.prisma.menuItem.update({
       where: { id: itemId },
       data: {
         status: 'COMPLETED',
-        modelUrl: SAMPLE_GLB,
-        usdzUrl: SAMPLE_USDZ,
+        modelUrl: model.glb,
+        usdzUrl: model.usdz || null,
       },
     });
   }
